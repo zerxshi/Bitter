@@ -1,30 +1,50 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="app">
+    <navbar @showDialog="showDialog = true"></navbar>
+    <router-view
+      :showDialog="showDialog"
+      @hideDialog="showDialog = false"
+    ></router-view>
+  </div>
 </template>
 
+<script setup>
+import Navbar from "@/components/UI/Navbar"
+import { ref } from "vue"
+
+const showDialog = ref(false)
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
-nav {
-  padding: 30px;
+body {
+  background-color: #271a2c;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.app {
+  display: grid;
+  grid-template-columns: 1fr 1050px 1fr;
+  column-gap: 40px;
+  justify-content: start;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+button {
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+button:disabled {
+  cursor: auto;
 }
 </style>
