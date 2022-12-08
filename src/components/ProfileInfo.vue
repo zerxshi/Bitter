@@ -5,8 +5,8 @@
       alt="profilePic"
       class="profilePic"
     />
-    <p class="userName">Arsen</p>
-    <p class="userTag">@zerxshi</p>
+    <p class="userName">{{ userName }}</p>
+    <p class="userTag">@{{ userTag }}</p>
     <p class="description">Learning Vue 3 + Composition API</p>
     <div class="followersCount">
       <p class="following">135 <small>Following</small></p>
@@ -15,7 +15,18 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  userName: {
+    type: String,
+    required: true,
+  },
+  userTag: {
+    type: String,
+    required: true,
+  },
+})
+</script>
 
 <style>
 .profileInfo {

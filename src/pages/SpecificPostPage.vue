@@ -3,7 +3,7 @@
     <div class="content" @click.stop>
       <post-item
         :post="specificPost"
-        :isSpecificPost="false"
+        :isSpecificPost="true"
         @delete="$emit('delete', specificPost)"
       />
       <div class="comments" v-if="comments.length">

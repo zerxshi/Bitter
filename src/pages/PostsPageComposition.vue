@@ -10,12 +10,8 @@
         <post-form @create="createPost" />
       </my-dialog>
       <post-form @create="createPost" />
-      <post-list
-        @delete="deletePost"
-        :posts="filteredPosts"
-        v-if="!isPostsLoading"
-      />
-      <h2 class="postsLoadingText" v-else>Posts loading in progress...</h2>
+      <post-list @delete="deletePost" :posts="filteredPosts" />
+      <!-- <h2 class="postsLoadingText">Posts loading in progress...</h2> -->
       <div v-intersection="loadMorePosts" class="observer"></div>
     </div>
     <my-search-menu

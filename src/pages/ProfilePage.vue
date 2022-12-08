@@ -1,8 +1,11 @@
 <template>
   <div class="profilePage">
     <div class="profile">
-      <profile-info />
-      <post-list :posts="myPosts" @delete="deletePost" />
+      <profile-info
+        :userName="exactUserName ? exactUserName : 'Arsen'"
+        :userTag="$route.params.user"
+      />
+      <post-list :posts="userPosts" @delete="deletePost" />
       <my-dialog :show="showDialog" @hideDialog="$emit('hideDialog')">
         <post-form @create="createPost" />
       </my-dialog>
@@ -19,27 +22,45 @@ import PostList from "@/components/PostList.vue"
 import PostForm from "@/components/PostForm.vue"
 import useGetPosts from "@/hooks/useGetPosts"
 import usePostAction from "@/hooks/usePostAction"
-import { computed } from "vue"
+import { ref, computed, onMounted } from "vue"
+import { useRoute } from "vue-router"
 
 const props = defineProps({
   showDialog: {
     type: Boolean,
   },
 })
-
 const emit = defineEmits(["hideDialog"])
+const route = useRoute()
 
 const { posts, loadMorePosts } = useGetPosts(10)
 const { createPost, deletePost } = usePostAction(posts, emit)
 
-const myPosts = computed(() => {
+let exactUserName = ref("")
+
+const user = ref({
+  userName: exactUserName.value ? exactUserName.value : "Arsen",
+  userTag: route.params.user,
+})
+
+const findExactUserName = () => {
+  posts.value.forEach((post) => {
+    if (post.user == route.params.user) {
+      exactUserName.value = post.userName
+    }
+  })
+}
+
+const userPosts = computed(() => {
   return [...posts.value].map((post) => ({
     ...post,
-    userName: "Arsen",
-    user: "zerxshi",
+    userName: exactUserName.value ? exactUserName.value : "Arsen",
+    user: route.params.user,
     myPost: true,
   }))
 })
+
+onMounted(findExactUserName)
 </script>
 
 <style>

@@ -8,7 +8,7 @@
         </li>
       </ul>
     </div>
-    <p class="postAuthor">
+    <p class="postAuthor" @click.stop="$router.push(`/profile/${post.user}`)">
       {{ post.userName }} <small>@{{ post.user }}</small>
     </p>
     <p>{{ post.body }}</p>
@@ -50,6 +50,11 @@ const showPost = () => {
   margin-bottom: 10px;
   color: #9c5f64;
   font-size: 18px;
+}
+
+.postAuthor:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 small {

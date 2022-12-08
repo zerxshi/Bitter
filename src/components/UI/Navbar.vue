@@ -3,7 +3,7 @@
     <div class="navbarBtns">
       <button class="navbarBtn" @click="$router.push('/')">Home</button>
       <button class="navbarBtn" @click="$router.push('/news')">News</button>
-      <button class="navbarBtn" @click="$router.push('/profile')">
+      <button class="navbarBtn" @click="$router.push('/profile/zerxshi')">
         Profile
       </button>
       <button class="navbarBtn" @click="$router.push('/')">Settings</button>

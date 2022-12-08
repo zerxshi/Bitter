@@ -13,7 +13,7 @@ const routes = [
     component: NewsPage,
   },
   {
-    path: "/profile",
+    path: "/profile/:user",
     component: ProfilePage,
   },
 ]
