@@ -1,20 +1,11 @@
 <template>
   <div class="specificPost" @click="$emit('hideSpecificPost')">
     <div class="content" @click.stop>
-      <div class="post">
-        <div class="hoverMenu" v-if="specificPost.myPost">
-          <i class="uil uil-ellipsis-h" onClick="showMenu(this)"></i>
-          <ul class="menu">
-            <li @click="$emit('delete', specificPost)">
-              <i class="uil uil-trash"></i>Delete
-            </li>
-          </ul>
-        </div>
-        <div class="postAuthor">
-          {{ specificPost.userName }} <small>@{{ specificPost.user }}</small>
-        </div>
-        <div>{{ specificPost.body }}</div>
-      </div>
+      <post-item
+        :post="specificPost"
+        :isSpecificPost="false"
+        @delete="$emit('delete', specificPost)"
+      />
       <div class="comments" v-if="comments.length">
         <h3>Comments</h3>
         <div class="comment" v-for="comment in comments" :key="comment.id">
@@ -30,6 +21,8 @@
 </template>
 
 <script setup>
+import PostItem from "@/components/PostItem.vue"
+
 const props = defineProps({
   specificPost: {
     type: Object,
@@ -39,6 +32,8 @@ const props = defineProps({
     type: Array,
   },
 })
+
+const emit = defineEmits(["delete", "hideSpecificPost"])
 </script>
 
 <style scoped>

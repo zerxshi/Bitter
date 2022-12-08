@@ -1,19 +1,17 @@
 <template>
-  <div class="post">
-    <div class="hoverMenu">
+  <div class="post" @click="showPost">
+    <div class="hoverMenu" v-if="post.myPost">
       <i class="uil uil-ellipsis-h" onClick="showMenu(this)"></i>
       <ul class="menu">
-        <li @click="$emit('delete', post)" v-if="post.myPost">
+        <li @click="$emit('delete', post)">
           <i class="uil uil-trash"></i>Delete
         </li>
-        <!-- <li @click.stop="$router.push(`/posts/${post.id}`)">Open</li> -->
-        <li @click="$emit('showPost')">Open</li>
       </ul>
     </div>
-    <div class="postAuthor">
+    <p class="postAuthor">
       {{ post.userName }} <small>@{{ post.user }}</small>
-    </div>
-    <div>{{ post.body }}</div>
+    </p>
+    <p>{{ post.body }}</p>
   </div>
 </template>
 
@@ -23,7 +21,19 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isSpecificPost: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const emit = defineEmits(["showPost", "delete"])
+
+const showPost = () => {
+  if (!props.isSpecificPost) {
+    emit("showPost")
+  }
+}
 </script>
 
 <style>

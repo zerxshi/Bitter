@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <nav class="navbar">
     <div class="navbarBtns">
       <button class="navbarBtn" @click="$router.push('/')">Home</button>
       <button class="navbarBtn" @click="$router.push('/news')">News</button>
@@ -7,9 +7,11 @@
         Profile
       </button>
       <button class="navbarBtn" @click="$router.push('/')">Settings</button>
-      <button class="createPostBtn" @click="$emit('showDialog')">Create post</button>
+      <button class="createPostBtn" @click="$emit('showDialog')">
+        Create post
+      </button>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup></script>

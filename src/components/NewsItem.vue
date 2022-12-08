@@ -1,7 +1,7 @@
 <template>
   <div class="article">
-    <div class="articleAuthor">{{ article.author }}</div>
-    <div>{{ article.content }}</div>
+    <p class="articleAuthor">{{ article.author }}</p>
+    <article>{{ article.content }}</article>
     <img class="articleImg" :src="article.urlToImage" alt="newsImage" />
   </div>
 </template>
