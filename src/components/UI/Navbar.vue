@@ -7,14 +7,18 @@
         Profile
       </button>
       <button class="navbarBtn" @click="$router.push('/')">Settings</button>
-      <button class="createPostBtn" @click="$emit('showDialog')">
+      <button class="createPostBtn" @click="storePosts.showDialog = true">
         Create post
       </button>
     </div>
   </nav>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStorePosts } from "@/stores/storePosts"
+
+const storePosts = useStorePosts()
+</script>
 
 <style scoped>
 .navbar {

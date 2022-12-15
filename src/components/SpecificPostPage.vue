@@ -1,14 +1,14 @@
 <template>
-  <div class="specificPost" @click="$emit('hideSpecificPost')">
+  <div class="specificPost" @click="storePosts.showSpecificPost = false">
     <div class="content" @click.stop>
-      <post-item
-        :post="specificPost"
-        :isSpecificPost="true"
-        @delete="$emit('delete', specificPost)"
-      />
-      <div class="comments" v-if="comments.length">
+      <post-item :post="storePosts.specificPost" />
+      <div class="comments" v-if="storePosts.filteredComments.length">
         <h3>Comments</h3>
-        <div class="comment" v-for="comment in comments" :key="comment.id">
+        <div
+          class="comment"
+          v-for="comment in storePosts.filteredComments"
+          :key="comment.id"
+        >
           <div class="commentAuthor">
             {{ comment.email }}
           </div>
@@ -22,18 +22,9 @@
 
 <script setup>
 import PostItem from "@/components/PostItem.vue"
+import { useStorePosts } from "@/stores/storePosts"
 
-const props = defineProps({
-  specificPost: {
-    type: Object,
-    required: true,
-  },
-  comments: {
-    type: Array,
-  },
-})
-
-const emit = defineEmits(["delete", "hideSpecificPost"])
+const storePosts = useStorePosts()
 </script>
 
 <style scoped>

@@ -1,12 +1,7 @@
 <template>
   <div class="sortAndSearchMenu">
-    <input
-      class="searchInput"
-      placeholder="Search..."
-      :value="searchQuery"
-      @input="updateSearchQuery($event)"
-    />
-    <select class="select" :value="selectedSort" @change="changeOption($event)">
+    <input class="searchInput" placeholder="Search..." v-model="searchQuery" />
+    <select class="select" v-model="selectedSort">
       <option disabled value="">Sort by:</option>
       <option
         v-for="option in options"
@@ -22,35 +17,41 @@
 <script>
 export default {
   name: "my-search-menu",
-  methods: {
-    updateSearchQuery(event) {
-      this.$emit("update:searchQuery", event.target.value)
-    },
-    changeOption(event) {
-      this.$emit("update:selectedSort", event.target.value)
-    },
-  },
 }
 </script>
 
 <script setup>
+import { useStorePosts } from "@/stores/storePosts"
+import useFilter from "@/hooks/useFilter"
+
 const props = defineProps({
-  selectedSort: String,
   options: {
     type: Array,
     default: () => [],
   },
-  searchQuery: String,
 })
 
-const emit = defineEmits(["update:searchQuery", "update:selectedSort"])
+const { searchQuery, selectedSort } = useFilter()
 
-const updateSearchQuery = (event) => {
-  emit("update:searchQuery", event.target.value)
-}
-const changeOption = (event) => {
-  emit("update:selectedSort", event.target.value)
-}
+const storePosts = useStorePosts()
+
+// const props = defineProps({
+//   selectedSort: String,
+//   options: {
+//     type: Array,
+//     default: () => [],
+//   },
+//   searchQuery: String,
+// })
+
+// const emit = defineEmits(["update:searchQuery", "update:selectedSort"])
+
+// const updateSearchQuery = (event) => {
+//   emit("update:searchQuery", event.target.value)
+// }
+// const changeOption = (event) => {
+//   emit("update:selectedSort", event.target.value)
+// }
 </script>
 
 <style scoped>

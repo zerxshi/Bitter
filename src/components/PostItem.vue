@@ -1,9 +1,9 @@
 <template>
-  <div class="post" @click="showPost">
-    <div class="hoverMenu" v-if="post.myPost">
+  <div class="post" @click="storePosts.showPost(post.id)">
+    <div class="hoverMenu" v-if="!storePosts.isSpecificPost && post.myPost">
       <i class="uil uil-ellipsis-h" onClick="showMenu(this)"></i>
       <ul class="menu">
-        <li @click="$emit('delete', post)">
+        <li @click.stop="storePosts.deletePost(post)">
           <i class="uil uil-trash"></i>Delete
         </li>
       </ul>
@@ -11,27 +11,32 @@
     <p class="postAuthor" @click.stop="$router.push(`/profile/${post.user}`)">
       {{ post.userName }} <small>@{{ post.user }}</small>
     </p>
-    <p>{{ post.body }}</p>
+    <p @click.stop="checkMouseAction">{{ post.body }}</p>
   </div>
 </template>
 
 <script setup>
+import { useStorePosts } from "@/stores/storePosts"
+import { useRouter } from "vue-router"
+
 const props = defineProps({
   post: {
     type: Object,
     required: true,
   },
-  isSpecificPost: {
-    type: Boolean,
-    default: false,
-  },
 })
 
-const emit = defineEmits(["showPost", "delete"])
+const storePosts = useStorePosts()
+const router = useRouter()
 
-const showPost = () => {
-  if (!props.isSpecificPost) {
-    emit("showPost")
+const checkMouseAction = (e) => {
+  const isTextHighlighting = window.getSelection().toString().trim() !== ""
+  if (e.target.classList.contains("postAuthor") && !isTextHighlighting) {
+    e.target.parentElement.click()
+    router.push(`/profile/${props.post.user}`)
+  }
+  if (!isTextHighlighting) {
+    e.target.parentElement.click()
   }
 }
 </script>
@@ -50,6 +55,7 @@ const showPost = () => {
   margin-bottom: 10px;
   color: #9c5f64;
   font-size: 18px;
+  width: max-content;
 }
 
 .postAuthor:hover {

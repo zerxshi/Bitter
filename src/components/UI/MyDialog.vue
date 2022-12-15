@@ -1,5 +1,9 @@
 <template>
-  <div class="dialog" v-if="show" @click="$emit('hideDialog', false)">
+  <div
+    class="dialog"
+    v-if="storePosts.showDialog"
+    @click="storePosts.showDialog = false"
+  >
     <div class="dialogContent" @click.stop>
       <slot></slot>
     </div>
@@ -7,21 +11,15 @@
 </template>
 
 <script>
-// import toggleMixin from "@/mixins/toggleMixin"
-
 export default {
   name: "my-dialog",
-  // mixins: [toggleMixin],
 }
 </script>
 
 <script setup>
-const props = defineProps({
-  show: {
-    type: Boolean,
-    default: false,
-  },
-})
+import { useStorePosts } from "@/stores/storePosts"
+
+const storePosts = useStorePosts()
 </script>
 
 <style scoped>

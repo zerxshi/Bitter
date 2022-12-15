@@ -1,29 +1,30 @@
 <template>
   <div class="newsPage">
     <div class="newsList">
-      <news-list :articles="filteredNews" v-if="!isNewsLoading" />
+      <my-dialog>
+        <post-form />
+      </my-dialog>
+      <news-list
+        :articles="storeNews.filteredNews"
+        v-if="!storeNews.isNewsLoading"
+      />
       <h2 class="newsLoadingText" v-else>News loading in progress...</h2>
-      <div v-intersection="loadMoreNews" class="observer"></div>
+      <div v-intersection="storeNews.loadMoreNews" class="observer"></div>
     </div>
-    <my-search-menu
-      v-model:selectedSort="selectedSort"
-      v-model:searchQuery="searchQuery"
-      :options="sortOptionsNews"
-    />
+    <my-search-menu :options="storeNews.sortOptionsNews" />
   </div>
 </template>
 
 <script setup>
+import { onMounted } from "@vue/runtime-core"
+import { useStoreNews } from "@/stores/storeNews"
 import NewsList from "@/components/NewsList.vue"
 import MySortAndSearch from "@/components/UI/MySortAndSearch.vue"
-import useGetNews from "@/hooks/useGetNews"
-import useFilter from "@/hooks/useFilter"
+import PostForm from "@/components/PostForm"
 
-const { articles, isNewsLoading, loadMoreNews } = useGetNews(10)
-const { searchQuery, selectedSort, sortOptionsNews, filteredNews } = useFilter(
-  undefined,
-  articles
-)
+const storeNews = useStoreNews()
+
+onMounted(storeNews.fetchNews)
 </script>
 
 <style scoped>

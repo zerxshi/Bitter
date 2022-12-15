@@ -12,8 +12,9 @@
 
 <script setup>
 import { ref } from "@vue/reactivity"
+import { useStorePosts } from "@/stores/storePosts"
 
-const emit = defineEmits(["create"])
+const storePosts = useStorePosts()
 
 let post = ref({
   userName: "Arsen",
@@ -25,7 +26,8 @@ let post = ref({
 const createPost = () => {
   if (post.value.body !== "") {
     post.value.id = Date.now()
-    emit("create", post.value)
+    storePosts.posts.unshift(post.value)
+    storePosts.showDialog = false
     post.value = {
       userName: "Arsen",
       user: "zerxshi",

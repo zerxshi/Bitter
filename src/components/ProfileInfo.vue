@@ -5,8 +5,10 @@
       alt="profilePic"
       class="profilePic"
     />
-    <p class="userName">{{ userName }}</p>
-    <p class="userTag">@{{ userTag }}</p>
+    <p class="userName">
+      {{ storeProfile.exactUserName ? storeProfile.exactUserName : "Arsen" }}
+    </p>
+    <p class="userTag">@{{ $route.params.user }}</p>
     <p class="description">Learning Vue 3 + Composition API</p>
     <div class="followersCount">
       <p class="following">135 <small>Following</small></p>
@@ -16,16 +18,9 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  userName: {
-    type: String,
-    required: true,
-  },
-  userTag: {
-    type: String,
-    required: true,
-  },
-})
+import { useStoreProfile } from "@/stores/storeProfile"
+
+const storeProfile = useStoreProfile()
 </script>
 
 <style>

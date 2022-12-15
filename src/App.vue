@@ -1,18 +1,12 @@
 <template>
   <div class="app">
-    <navbar @showDialog="showDialog = true"></navbar>
-    <router-view
-      :showDialog="showDialog"
-      @hideDialog="showDialog = false"
-    ></router-view>
+    <navbar></navbar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup>
 import Navbar from "@/components/UI/Navbar"
-import { ref } from "vue"
-
-const showDialog = ref(false)
 </script>
 
 <style>

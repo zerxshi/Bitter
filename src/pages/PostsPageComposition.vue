@@ -1,46 +1,26 @@
 <template>
   <div class="postsPage">
     <div class="postsList">
-      <!--<div class="appBtns">
-        <my-button class="createPostBtn" @click="dialogVisible = true"
-        >Создать пост</my-button
-        <my-select v-model="selectedSort" :options="sortOptions" />
-      </div>-->
-      <my-dialog :show="showDialog" @hideDialog="$emit('hideDialog')">
-        <post-form @create="createPost" />
+      <my-dialog>
+        <post-form />
       </my-dialog>
-      <post-form @create="createPost" />
-      <post-list @delete="deletePost" :posts="filteredPosts" />
-      <!-- <h2 class="postsLoadingText">Posts loading in progress...</h2> -->
-      <div v-intersection="loadMorePosts" class="observer"></div>
+      <post-form />
+      <post-list :posts="storePosts.filteredPosts" />
+      <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
     </div>
-    <my-search-menu
-      v-model:selectedSort="selectedSort"
-      v-model:searchQuery="searchQuery"
-      :options="sortOptions"
-    />
+    <my-search-menu :options="storePosts.sortOptionsPosts" />
   </div>
 </template>
 
 <script setup>
 import PostForm from "@/components/PostForm"
 import PostList from "@/components/PostList.vue"
-import useGetPosts from "@/hooks/useGetPosts"
-import usePostAction from "@/hooks/usePostAction"
-import useFilter from "@/hooks/useFilter"
+import { useStorePosts } from "@/stores/storePosts"
+import { onMounted } from "@vue/runtime-core"
 
-const props = defineProps({
-  showDialog: {
-    type: Boolean,
-  },
-})
+const storePosts = useStorePosts()
 
-const emit = defineEmits(["hideDialog"])
-
-const { posts, isPostsLoading, loadMorePosts } = useGetPosts(10)
-const { createPost, deletePost } = usePostAction(posts, emit)
-const { searchQuery, selectedSort, sortOptions, filteredPosts } =
-  useFilter(posts)
+onMounted(storePosts.fetchPosts)
 </script>
 
 <style>
