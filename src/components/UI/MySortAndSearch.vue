@@ -34,24 +34,6 @@ const props = defineProps({
 const { searchQuery, selectedSort } = useFilter()
 
 const storePosts = useStorePosts()
-
-// const props = defineProps({
-//   selectedSort: String,
-//   options: {
-//     type: Array,
-//     default: () => [],
-//   },
-//   searchQuery: String,
-// })
-
-// const emit = defineEmits(["update:searchQuery", "update:selectedSort"])
-
-// const updateSearchQuery = (event) => {
-//   emit("update:searchQuery", event.target.value)
-// }
-// const changeOption = (event) => {
-//   emit("update:selectedSort", event.target.value)
-// }
 </script>
 
 <style scoped>
