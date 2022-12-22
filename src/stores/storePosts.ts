@@ -5,12 +5,12 @@ import useFilter from "@/hooks/useFilter"
 
 export const useStorePosts = defineStore("storePosts", () => {
   //Get Posts
-  const posts = ref([])
-  const users = ref([])
-  const page = ref(1)
-  const postsLimit = ref(10)
+  const posts = ref<any[]>([])
+  const users = ref<any[]>([])
+  const page = ref<number>(1)
+  const postsLimit = ref<number>(10)
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (): Promise<any> => {
     if (!posts.value.length) {
       try {
         const postsResponse = await axios.get(
@@ -27,7 +27,7 @@ export const useStorePosts = defineStore("storePosts", () => {
         )
         posts.value = postsResponse.data
         users.value = usersResponse.data
-        posts.value.forEach((post, index) => {
+        posts.value.forEach((post: any, index) => {
           post.user = users.value[index].username
           post.userName = users.value[index].name
         })
@@ -37,7 +37,7 @@ export const useStorePosts = defineStore("storePosts", () => {
     }
   }
 
-  const loadMorePosts = async () => {
+  const loadMorePosts = async (): Promise<any> => {
     try {
       page.value++
       const postsResponse = await axios.get(
@@ -54,7 +54,7 @@ export const useStorePosts = defineStore("storePosts", () => {
       )
       const additionalPosts = postsResponse.data
       const additionalUsers = usersResponse.data
-      additionalPosts.forEach((post, index) => {
+      additionalPosts.forEach((post: any, index: number) => {
         post.user = additionalUsers[index].username
         post.userName = additionalUsers[index].name
       })
@@ -65,23 +65,25 @@ export const useStorePosts = defineStore("storePosts", () => {
   }
 
   //Post Actions
-  const deletePost = (post) => {
+  const showDialog = ref<boolean>(false)
+
+  const deletePost = (post: any): void => {
     posts.value = posts.value.filter((p) => p.id !== post.id)
     showSpecificPost.value = false
   }
 
   //Filter Posts
   const { searchQuery, selectedSort } = useFilter()
-  const sortOptionsPosts = ref([{ value: "body", name: "content" }])
+  const sortOptionsPosts = ref<any[]>([{ value: "body", name: "content" }])
 
-  const sortedPosts = computed(() => {
+  const sortedPosts = computed<any[]>(() => {
     return [...posts.value].sort((post1, post2) =>
       post1[selectedSort.value]?.localeCompare(post2[selectedSort.value])
     )
   })
 
-  const filteredPosts = computed(() => {
-    const searchFilter = (post) => {
+  const filteredPosts = computed<any[]>(() => {
+    const searchFilter = (post: any) => {
       return (
         [post.body, post.userName, post.user]
           .join("")
@@ -93,9 +95,9 @@ export const useStorePosts = defineStore("storePosts", () => {
   })
 
   //Specific post
-  const comments = ref([])
+  const comments = ref<any[]>([])
 
-  const fetchComments = async () => {
+  const fetchComments = async (): Promise<any> => {
     try {
       const commentsResponse = await axios.get(
         "https://jsonplaceholder.typicode.com/comments"
@@ -106,12 +108,12 @@ export const useStorePosts = defineStore("storePosts", () => {
     }
   }
 
-  let showSpecificPost = ref(false)
-  let isSpecificPost = ref(false)
-  let specificPost = ref({})
-  const filteredComments = ref([])
+  let showSpecificPost = ref<boolean>(false)
+  let isSpecificPost = ref<boolean>(false)
+  let specificPost = ref<object>({})
+  const filteredComments = ref<any[]>([])
 
-  const showPost = (id) => {
+  const showPost = (id: number): void => {
     if (!isSpecificPost.value) {
       posts.value.forEach((post) => {
         if (post.id == id) {
@@ -135,6 +137,7 @@ export const useStorePosts = defineStore("storePosts", () => {
     filteredComments,
     showSpecificPost,
     isSpecificPost,
+    showDialog,
     showPost,
     fetchPosts,
     loadMorePosts,

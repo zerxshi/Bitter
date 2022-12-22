@@ -14,13 +14,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "my-search-menu",
 }
 </script>
 
-<script setup>
+<script setup lang="ts">
 import { useStorePosts } from "@/stores/storePosts"
 import useFilter from "@/hooks/useFilter"
 

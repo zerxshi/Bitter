@@ -16,13 +16,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "my-pagination",
 }
 </script>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   totalPages: {
     type: Number,

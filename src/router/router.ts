@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-import NewsPage from "@/pages/NewsPage"
-import PostsPageComposition from "@/pages/PostsPageComposition"
-import ProfilePage from "@/pages/ProfilePage"
+import NewsPage from "@/pages/NewsPage.vue"
+import PostsPageComposition from "@/pages/PostsPageComposition.vue"
+import ProfilePage from "@/pages/ProfilePage.vue"
 
-const routes = [
+const routes: any[] = [
   {
     path: "/",
     component: PostsPageComposition,

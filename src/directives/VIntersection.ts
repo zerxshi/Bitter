@@ -1,10 +1,10 @@
 export default {
-  mounted(el, binding) {
+  mounted(el: HTMLInputElement, binding: any): void {
     const options = {
       rootMargin: "0px",
       threshold: 1.0,
     }
-    const callback = (entries, observer) => {
+    const callback = (entries: any, observer: any): void => {
       if (entries[0].isIntersecting) {
         binding.value()
       }

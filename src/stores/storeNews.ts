@@ -5,12 +5,12 @@ import useFilter from "@/hooks/useFilter"
 
 export const useStoreNews = defineStore("storeNews", () => {
   //Get News
-  const articles = ref([])
-  const page = ref(1)
-  const newsLimit = ref(10)
-  const isNewsLoading = ref(true)
+  const articles = ref<any[]>([])
+  const page = ref<number>(1)
+  const newsLimit = ref<number>(10)
+  const isNewsLoading = ref<boolean>(true)
 
-  const fetchNews = async () => {
+  const fetchNews = async (): Promise<any> => {
     try {
       const response = await axios.get(
         "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=435fc15d4e2a45f78c1732e283078646",
@@ -29,7 +29,7 @@ export const useStoreNews = defineStore("storeNews", () => {
     }
   }
 
-  const loadMoreNews = async () => {
+  const loadMoreNews = async (): Promise<any> => {
     try {
       page.value++
       const response = await axios.get(
@@ -49,16 +49,16 @@ export const useStoreNews = defineStore("storeNews", () => {
 
   //Filter News
   const { searchQuery, selectedSort } = useFilter()
-  const sortOptionsNews = ref([{ value: "content", name: "content" }])
+  const sortOptionsNews = ref<any[]>([{ value: "content", name: "content" }])
 
-  const sortedNews = computed(() => {
+  const sortedNews = computed<any[]>(() => {
     return [...articles.value].sort((artcile1, article2) =>
       artcile1[selectedSort.value]?.localeCompare(article2[selectedSort.value])
     )
   })
 
-  const filteredNews = computed(() => {
-    const searchFilter = (article) => {
+  const filteredNews = computed<any[]>(() => {
+    const searchFilter = (article: any) => {
       return (
         [article.content, article.author]
           .join("")

@@ -14,7 +14,7 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStorePosts } from "@/stores/storePosts"
 
 const storePosts = useStorePosts()

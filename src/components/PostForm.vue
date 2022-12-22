@@ -10,20 +10,28 @@
   </form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "@vue/reactivity"
 import { useStorePosts } from "@/stores/storePosts"
 
 const storePosts = useStorePosts()
 
-let post = ref({
+interface post {
+  userName: string
+  user: string
+  body: string
+  myPost: boolean
+  id?: number
+}
+
+let post = ref<post>({
   userName: "Arsen",
   user: "zerxshi",
   body: "",
   myPost: true,
 })
 
-const createPost = () => {
+const createPost = (): void => {
   if (post.value.body !== "") {
     post.value.id = Date.now()
     storePosts.posts.unshift(post.value)

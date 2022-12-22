@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStorePosts } from "@/stores/storePosts"
 import { useRouter } from "vue-router"
 
@@ -29,14 +29,17 @@ const props = defineProps({
 const storePosts = useStorePosts()
 const router = useRouter()
 
-const checkMouseAction = (e) => {
+const checkMouseAction = (event: Event): void => {
   const isTextHighlighting = window.getSelection().toString().trim() !== ""
-  if (e.target.classList.contains("postAuthor") && !isTextHighlighting) {
-    e.target.parentElement.click()
+  if (
+    (event.target as HTMLInputElement).classList.contains("postAuthor") &&
+    !isTextHighlighting
+  ) {
+    ;(event.target as HTMLInputElement).parentElement.click()
     router.push(`/profile/${props.post.user}`)
   }
   if (!isTextHighlighting) {
-    e.target.parentElement.click()
+    ;(event.target as HTMLInputElement).parentElement.click()
   }
 }
 </script>
