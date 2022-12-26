@@ -4,9 +4,9 @@
       type="text"
       placeholder="What's happening?"
       class="input"
-      v-model="post.body"
+      v-model="storePosts.postBody"
     />
-    <button class="addPostBtn" @click="createPost">Publish</button>
+    <button class="addPostBtn" @click="storePosts.createPost">Publish</button>
   </form>
 </template>
 
@@ -15,35 +15,6 @@ import { ref } from "@vue/reactivity"
 import { useStorePosts } from "@/stores/storePosts"
 
 const storePosts = useStorePosts()
-
-interface post {
-  userName: string
-  user: string
-  body: string
-  myPost: boolean
-  id?: number
-}
-
-let post = ref<post>({
-  userName: "Arsen",
-  user: "zerxshi",
-  body: "",
-  myPost: true,
-})
-
-const createPost = (): void => {
-  if (post.value.body !== "") {
-    post.value.id = Date.now()
-    storePosts.posts.unshift(post.value)
-    storePosts.showDialog = false
-    post.value = {
-      userName: "Arsen",
-      user: "zerxshi",
-      body: "",
-      myPost: true,
-    }
-  }
-}
 </script>
 
 <style scoped>

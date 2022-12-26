@@ -9,7 +9,7 @@
       />
     </transition-group>
   </div>
-  <h2 class="noPostsText" v-else>There are no posts. Create the first one!</h2>
+  <h2 class="noPostsText" v-else>There are no posts yet...</h2>
   <specific-post-page
     v-if="storePosts.showSpecificPost"
     class="specificPostPage"

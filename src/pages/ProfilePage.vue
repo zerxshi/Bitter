@@ -2,11 +2,11 @@
   <div class="profilePage">
     <div class="profile">
       <profile-info />
-      <post-list :posts="storeProfile.userPosts" />
+      <post-list :posts="storePosts.userPosts" />
       <my-dialog>
         <post-form />
       </my-dialog>
-      <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
+      <!-- <div v-intersection="storePosts.loadMorePosts" class="observer"></div> -->
     </div>
     <trends-and-recs />
   </div>
@@ -24,7 +24,7 @@ import PostForm from "@/components/PostForm.vue"
 const storeProfile = useStoreProfile()
 const storePosts = useStorePosts()
 
-onMounted(storeProfile.findExactUserName)
+onMounted(storePosts.getPosts)
 </script>
 
 <style>

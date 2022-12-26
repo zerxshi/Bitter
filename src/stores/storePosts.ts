@@ -2,13 +2,30 @@ import { defineStore } from "pinia"
 import { ref, computed } from "vue"
 import axios from "axios"
 import useFilter from "@/hooks/useFilter"
+import {
+  collection,
+  onSnapshot,
+  doc,
+  addDoc,
+  deleteDoc,
+  query,
+  orderBy,
+} from "firebase/firestore"
+import { db } from "@/js/firebase"
+import { useRoute } from "vue-router"
 
 export const useStorePosts = defineStore("storePosts", () => {
   //Get Posts
-  const posts = ref<any[]>([])
+  let posts = ref<any[]>([])
+  let userPosts = ref<any[]>([])
   const users = ref<any[]>([])
   const page = ref<number>(1)
   const postsLimit = ref<number>(10)
+  const postsCollectionRef = collection(db, "posts")
+  const postsCollectionQuery = query(
+    postsCollectionRef,
+    orderBy("date", "desc")
+  )
 
   const fetchPosts = async (): Promise<any> => {
     if (!posts.value.length) {
@@ -65,10 +82,72 @@ export const useStorePosts = defineStore("storePosts", () => {
   }
 
   //Post Actions
-  const showDialog = ref<boolean>(false)
+  const route = useRoute()
+  let showDialog = ref<boolean>(false)
 
-  const deletePost = (post: any): void => {
-    posts.value = posts.value.filter((p) => p.id !== post.id)
+  const getPosts = async (homePage: boolean) => {
+    onSnapshot(postsCollectionQuery, (querySnapshot) => {
+      let firebasePosts = ref<any[]>([])
+      querySnapshot.forEach((doc) => {
+        if (route.params.user === doc.data().user || homePage) {
+          let post = {
+            id: doc.id,
+            body: doc.data().body,
+            myPost: true,
+            user: doc.data().user,
+            userName: doc.data().userName,
+            date: doc.data().date,
+          }
+          firebasePosts.value.unshift(post)
+        }
+      })
+      userPosts.value = firebasePosts.value
+      if (homePage) {
+        posts.value = [...userPosts.value, ...posts.value]
+      }
+    })
+  }
+
+  // interface post {
+  //   userName: string
+  //   user: string
+  //   body: string
+  //   myPost: boolean
+  //   id?: number
+  // }
+
+  let postBody = ref<string>("")
+
+  const createPost = async (): Promise<any> => {
+    const date = Date.now().toString()
+    // if (post.value.body !== "") {
+    //   post.value.id = Date.now()
+    //   posts.value.unshift(post.value)
+    //   showDialog.value = false
+    //   post.value = {
+    //     userName: "Arsen",
+    //     user: "zerxshi",
+    //     body: "",
+    //     myPost: true,
+    //   }
+    // }
+    if (postBody.value !== "") {
+      await addDoc(postsCollectionRef, {
+        body: postBody.value,
+        user: "zerxshi",
+        userName: "Arsen",
+        myPost: true,
+        date,
+      })
+      postBody.value = ""
+      showDialog.value = false
+    }
+  }
+
+  const deletePost = async (idToDelete: number): Promise<any> => {
+    // posts.value = posts.value.filter((p) => p.id !== idToDelete)
+    // showSpecificPost.value = false
+    await deleteDoc(doc(postsCollectionRef, idToDelete.toString()))
     showSpecificPost.value = false
   }
 
@@ -129,6 +208,8 @@ export const useStorePosts = defineStore("storePosts", () => {
 
   return {
     posts,
+    userPosts,
+    postBody,
     searchQuery,
     selectedSort,
     sortOptionsPosts,
@@ -141,6 +222,8 @@ export const useStorePosts = defineStore("storePosts", () => {
     showPost,
     fetchPosts,
     loadMorePosts,
+    getPosts,
+    createPost,
     deletePost,
     fetchComments,
   }

@@ -13,14 +13,14 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue"
 import PostForm from "@/components/PostForm"
 import PostList from "@/components/PostList.vue"
 import { useStorePosts } from "@/stores/storePosts"
-import { onMounted } from "@vue/runtime-core"
 
 const storePosts = useStorePosts()
 
-onMounted(storePosts.fetchPosts)
+onMounted(storePosts.fetchPosts(), storePosts.getPosts(true))
 </script>
 
 <style>

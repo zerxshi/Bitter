@@ -19,8 +19,11 @@
 
 <script setup>
 import { useStoreProfile } from "@/stores/storeProfile"
+import { onMounted } from "@vue/runtime-core"
 
 const storeProfile = useStoreProfile()
+
+onMounted(storeProfile.findExactUserName)
 </script>
 
 <style>

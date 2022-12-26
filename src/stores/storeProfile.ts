@@ -16,18 +16,18 @@ export const useStoreProfile = defineStore("storeProfile", () => {
     })
   }
 
-  const userPosts = computed(() => {
-    return [...storePosts.posts].map((post) => ({
-      ...post,
-      userName: exactUserName.value ? exactUserName.value : "Arsen",
-      user: route.params.user,
-      myPost: true,
-    }))
-  })
+  // const userPosts = computed(() => {
+  //   return [...storePosts.posts].map((post) => ({
+  //     ...post,
+  //     userName: exactUserName.value ? exactUserName.value : "Arsen",
+  //     user: route.params.user,
+  //     myPost: true,
+  //   }))
+  // })
 
   return {
     exactUserName,
-    userPosts,
+    // userPosts,
     findExactUserName,
   }
 })
