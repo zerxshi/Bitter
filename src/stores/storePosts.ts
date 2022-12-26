@@ -102,9 +102,6 @@ export const useStorePosts = defineStore("storePosts", () => {
         }
       })
       userPosts.value = firebasePosts.value
-      if (homePage) {
-        posts.value = [...userPosts.value, ...posts.value]
-      }
     })
   }
 

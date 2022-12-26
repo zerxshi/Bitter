@@ -5,7 +5,7 @@
         <post-form />
       </my-dialog>
       <post-form />
-      <post-list :posts="storePosts.filteredPosts" />
+      <post-list :isHomePage="true" />
       <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
     </div>
     <my-search-menu :options="storePosts.sortOptionsPosts" />

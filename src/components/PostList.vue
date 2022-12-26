@@ -1,12 +1,25 @@
 <template>
-  <div v-if="posts.length" class="postListPage">
+  <div
+    v-if="storePosts.posts.length && storePosts.userPosts.length"
+    class="postListPage"
+  >
     <transition-group name="postList">
       <post-item
         class="post"
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
+        v-for="userPost in storePosts.userPosts"
+        :key="userPost.id"
+        :post="userPost"
       />
+    </transition-group>
+    <transition-group name="postList">
+      <div v-if="isHomePage">
+        <post-item
+          class="post"
+          v-for="post in storePosts.filteredPosts"
+          :key="post.id"
+          :post="post"
+        />
+      </div>
     </transition-group>
   </div>
   <h2 class="noPostsText" v-else>There are no posts yet...</h2>
@@ -23,9 +36,13 @@ import PostItem from "@/components/PostItem.vue"
 import SpecificPostPage from "@/components/SpecificPostPage.vue"
 
 const props = defineProps({
-  posts: {
-    type: Array,
-    required: true,
+  // posts: {
+  //   type: Array,
+  //   required: true,
+  // },
+  isHomePage: {
+    type: Boolean,
+    default: false,
   },
 })
 

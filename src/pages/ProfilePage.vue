@@ -2,11 +2,11 @@
   <div class="profilePage">
     <div class="profile">
       <profile-info />
-      <post-list :posts="storePosts.userPosts" />
+      <post-list />
       <my-dialog>
         <post-form />
       </my-dialog>
-      <!-- <div v-intersection="storePosts.loadMorePosts" class="observer"></div> -->
+      <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
     </div>
     <trends-and-recs />
   </div>
