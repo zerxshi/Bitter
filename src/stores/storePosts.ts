@@ -15,6 +15,8 @@ import { db } from "@/ts/firebase"
 import { useRoute } from "vue-router"
 import { useStoreAuth } from "./storeAuth"
 
+let getPostsSnapshot: any = null
+
 export const useStorePosts = defineStore("storePosts", () => {
   //Get Posts
   const route = useRoute()
@@ -94,23 +96,31 @@ export const useStorePosts = defineStore("storePosts", () => {
   }
 
   const getPosts = async (): Promise<any> => {
-    onSnapshot(postsCollectionQuery, (querySnapshot: any) => {
-      let firebasePosts = ref<any[]>([])
-      querySnapshot.forEach((doc: any) => {
-        // if (route.params.user === doc.data().user || homePage) {
-        let post = {
-          id: doc.id,
-          body: doc.data().body,
-          myPost: true,
-          user: doc.data().user,
-          userName: doc.data().userName,
-          date: doc.data().date,
-        }
-        firebasePosts.value.unshift(post)
-        // }
-      })
-      userPosts.value = firebasePosts.value
-    })
+    getPostsSnapshot = onSnapshot(
+      postsCollectionQuery,
+      (querySnapshot: any) => {
+        let firebasePosts = ref<any[]>([])
+        querySnapshot.forEach((doc: any) => {
+          // if (route.params.user === doc.data().user || homePage) {
+          let post = {
+            id: doc.id,
+            body: doc.data().body,
+            myPost: true,
+            user: doc.data().user,
+            userName: doc.data().userName,
+            date: doc.data().date,
+          }
+          firebasePosts.value.unshift(post)
+          // }
+        })
+        userPosts.value = firebasePosts.value
+      }
+    )
+  }
+
+  const clearPosts = () => {
+    userPosts.value = []
+    if (getPostsSnapshot) getPostsSnapshot()
   }
   //Post Actions
 
@@ -251,5 +261,6 @@ export const useStorePosts = defineStore("storePosts", () => {
     deletePost,
     fetchComments,
     getPosts,
+    clearPosts,
   }
 })

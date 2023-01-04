@@ -58,6 +58,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
       } else {
         userData.value = {}
         router.replace("/auth")
+        storePosts.clearPosts()
       }
     })
   }
@@ -69,8 +70,8 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         credentials.email,
         credentials.password
       ).catch((error) => console.log(error))
-      // @ts-ignore
-      await updateProfile(auth.currentUser, {
+
+      await updateProfile(auth.currentUser!, {
         displayName: credentials.login,
       }).catch((error) => console.log(error))
     } catch (error) {
