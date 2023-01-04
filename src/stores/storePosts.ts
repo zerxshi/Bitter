@@ -11,21 +11,21 @@ import {
   query,
   orderBy,
 } from "firebase/firestore"
-import { db } from "@/js/firebase"
+import { db } from "@/ts/firebase"
 import { useRoute } from "vue-router"
+import { useStoreAuth } from "./storeAuth"
 
 export const useStorePosts = defineStore("storePosts", () => {
   //Get Posts
+  const route = useRoute()
+  const storeAuth = useStoreAuth()
   let posts = ref<any[]>([])
   let userPosts = ref<any[]>([])
   const users = ref<any[]>([])
   const page = ref<number>(1)
   const postsLimit = ref<number>(10)
-  const postsCollectionRef = collection(db, "posts")
-  const postsCollectionQuery = query(
-    postsCollectionRef,
-    orderBy("date", "desc")
-  )
+  let postsCollectionRef: any
+  let postsCollectionQuery: any
 
   const fetchPosts = async (): Promise<any> => {
     if (!posts.value.length) {
@@ -81,29 +81,40 @@ export const useStorePosts = defineStore("storePosts", () => {
     }
   }
 
-  //Post Actions
-  const route = useRoute()
-  let showDialog = ref<boolean>(false)
+  const init = (): void => {
+    const storeAuth = useStoreAuth()
+    postsCollectionRef = collection(
+      db,
+      "users",
+      storeAuth.userData.id!,
+      "posts"
+    )
+    postsCollectionQuery = query(postsCollectionRef, orderBy("date", "desc"))
+    getPosts()
+  }
 
-  const getPosts = async (homePage: boolean) => {
-    onSnapshot(postsCollectionQuery, (querySnapshot) => {
+  const getPosts = async (): Promise<any> => {
+    onSnapshot(postsCollectionQuery, (querySnapshot: any) => {
       let firebasePosts = ref<any[]>([])
-      querySnapshot.forEach((doc) => {
-        if (route.params.user === doc.data().user || homePage) {
-          let post = {
-            id: doc.id,
-            body: doc.data().body,
-            myPost: true,
-            user: doc.data().user,
-            userName: doc.data().userName,
-            date: doc.data().date,
-          }
-          firebasePosts.value.unshift(post)
+      querySnapshot.forEach((doc: any) => {
+        // if (route.params.user === doc.data().user || homePage) {
+        let post = {
+          id: doc.id,
+          body: doc.data().body,
+          myPost: true,
+          user: doc.data().user,
+          userName: doc.data().userName,
+          date: doc.data().date,
         }
+        firebasePosts.value.unshift(post)
+        // }
       })
       userPosts.value = firebasePosts.value
     })
   }
+  //Post Actions
+
+  let showDialog = ref<boolean>(false)
 
   // interface post {
   //   userName: string
@@ -131,9 +142,8 @@ export const useStorePosts = defineStore("storePosts", () => {
     if (postBody.value !== "") {
       await addDoc(postsCollectionRef, {
         body: postBody.value,
-        user: "zerxshi",
-        userName: "Arsen",
-        myPost: true,
+        user: storeAuth.userData.login,
+        userName: storeAuth.userData.email,
         date,
       })
       postBody.value = ""
@@ -152,6 +162,15 @@ export const useStorePosts = defineStore("storePosts", () => {
   const { searchQuery, selectedSort } = useFilter()
   const sortOptionsPosts = ref<any[]>([{ value: "body", name: "content" }])
 
+  const searchFilter = (post: any) => {
+    return (
+      [post.body, post.userName, post.user]
+        .join("")
+        .toLowerCase()
+        .indexOf(searchQuery.value.toLowerCase()) !== -1
+    )
+  }
+
   const sortedPosts = computed<any[]>(() => {
     return [...posts.value].sort((post1, post2) =>
       post1[selectedSort.value]?.localeCompare(post2[selectedSort.value])
@@ -159,17 +178,18 @@ export const useStorePosts = defineStore("storePosts", () => {
   })
 
   const filteredPosts = computed<any[]>(() => {
-    const searchFilter = (post: any) => {
-      return (
-        [post.body, post.userName, post.user]
-          .join("")
-          .toLowerCase()
-          .indexOf(searchQuery.value.toLowerCase()) !== -1
-      )
-    }
     return sortedPosts.value.filter(searchFilter)
   })
 
+  const sortedUserPosts = computed<any[]>(() => {
+    return [...userPosts.value].sort((post1, post2) =>
+      post1[selectedSort.value]?.localeCompare(post2[selectedSort.value])
+    )
+  })
+
+  const filtereduserPosts = computed<any[]>(() => {
+    return sortedUserPosts.value.filter(searchFilter)
+  })
   //Specific post
   const comments = ref<any[]>([])
 
@@ -196,6 +216,12 @@ export const useStorePosts = defineStore("storePosts", () => {
           specificPost.value = post
         }
       })
+      userPosts.value.forEach((post) => {
+        if (post.id == id) {
+          specificPost.value = post
+        }
+      })
+
       filteredComments.value = comments.value.filter(
         (comment) => comment.postId == id
       )
@@ -211,6 +237,7 @@ export const useStorePosts = defineStore("storePosts", () => {
     selectedSort,
     sortOptionsPosts,
     filteredPosts,
+    filtereduserPosts,
     specificPost,
     filteredComments,
     showSpecificPost,
@@ -219,9 +246,10 @@ export const useStorePosts = defineStore("storePosts", () => {
     showPost,
     fetchPosts,
     loadMorePosts,
-    getPosts,
+    init,
     createPost,
     deletePost,
     fetchComments,
+    getPosts,
   }
 })

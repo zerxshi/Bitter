@@ -1,23 +1,63 @@
 <template>
   <nav class="navbar">
     <div class="navbarBtns">
-      <button class="navbarBtn" @click="$router.push('/')">Home</button>
-      <button class="navbarBtn" @click="$router.push('/news')">News</button>
-      <button class="navbarBtn" @click="$router.push('/profile/zerxshi')">
-        Profile
+      <button
+        @click="$router.push('/')"
+        :disabled="!storeAuth.userLogged"
+        class="navbarBtn"
+      >
+        <font-awesome-icon icon="fas fa-home" class="icon" />Home
       </button>
-      <button class="navbarBtn" @click="$router.push('/')">Settings</button>
+      <button
+        @click="$router.push('/news')"
+        :disabled="!storeAuth.userLogged"
+        class="navbarBtn"
+      >
+        <font-awesome-icon icon="fa-solid fa-newspaper" class="icon" />News
+      </button>
+      <button
+        @click="$router.push('/profile/zerxshi')"
+        :disabled="!storeAuth.userLogged"
+        class="navbarBtn"
+      >
+        <font-awesome-icon icon="fa-solid fa-user" class="icon" />Profile
+      </button>
+      <button
+        @click="$router.push('/')"
+        :disabled="!storeAuth.userLogged"
+        class="navbarBtn"
+      >
+        <font-awesome-icon icon="fa-solid fa-gear" class="icon" />Settings
+      </button>
       <button class="createPostBtn" @click="storePosts.showDialog = true">
         Create post
       </button>
+      <div v-if="storeAuth.userLogged" class="userInfo">
+        <img
+          src="https://pbs.twimg.com/media/FiPTOq5VsAYc2-n?format=jpg"
+          alt="userPic"
+          class="userPic"
+        />
+        <div class="userTags">
+          <p class="userName">{{ storeAuth.userData.email }}</p>
+          <p class="userTag">@{{ storeAuth.userData.login }}</p>
+        </div>
+        <font-awesome-icon
+          @click="storeAuth.logoutUser"
+          icon="fa-solid fa-right-from-bracket"
+          class="signOutIcon"
+        />
+      </div>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { useStorePosts } from "@/stores/storePosts"
+import { useStoreAuth } from "@/stores/storeAuth"
 
 const storePosts = useStorePosts()
+const storeAuth = useStoreAuth()
 </script>
 
 <style scoped>
@@ -34,19 +74,26 @@ const storePosts = useStorePosts()
 }
 
 .navbarBtn {
+  display: flex;
+  align-items: center;
   margin-top: 15px;
   border: none;
   background-color: transparent;
   color: #fcfdfd;
   font-size: 24px;
   font-weight: bold;
-  width: 150px;
+  width: 170px;
   height: 40px;
 }
 
 .navbarBtn:hover {
   background-color: #393148;
   border-radius: 50px;
+}
+
+.icon {
+  margin-right: 10px;
+  padding: 10px;
 }
 
 .createPostBtn {
@@ -57,7 +104,43 @@ const storePosts = useStorePosts()
   color: #393148;
   font-size: 22px;
   font-weight: bold;
-  width: 170px;
+  width: 200px;
   height: 40px;
+}
+
+.userInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  color: #fcfdfd;
+  width: 200px;
+  height: 40px;
+}
+
+.userPic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.userName {
+  color: #9c5f64;
+  font-weight: bold;
+}
+
+.userTag {
+  color: #9c9aa8;
+}
+
+.signOutIcon {
+  cursor: pointer;
+  font-size: 26px;
+  align-self: flex-end;
+}
+
+.signOutIcon:active {
+  transform: scale(0.96);
 }
 </style>

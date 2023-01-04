@@ -8,7 +8,6 @@
       <post-list :isHomePage="true" />
       <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
     </div>
-    <my-search-menu :options="storePosts.sortOptionsPosts" />
   </div>
 </template>
 
@@ -20,7 +19,7 @@ import { useStorePosts } from "@/stores/storePosts"
 
 const storePosts = useStorePosts()
 
-onMounted(storePosts.fetchPosts(), storePosts.getPosts(true))
+onMounted(storePosts.fetchPosts)
 </script>
 
 <style>

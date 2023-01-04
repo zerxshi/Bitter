@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue"
 import { useStoreProfile } from "@/stores/storeProfile"
 import { useStorePosts } from "@/stores/storePosts"
 import TrendsAndRecs from "@/components/TrendsAndRecs"
@@ -23,8 +22,6 @@ import PostForm from "@/components/PostForm.vue"
 
 const storeProfile = useStoreProfile()
 const storePosts = useStorePosts()
-
-onMounted(storePosts.getPosts)
 </script>
 
 <style>

@@ -2,11 +2,19 @@
   <div class="app">
     <navbar></navbar>
     <router-view></router-view>
+    <my-sort-and-search />
   </div>
 </template>
 
 <script setup>
-import Navbar from "@/components/UI/Navbar"
+import { onMounted } from "@vue/runtime-core"
+import { useStoreAuth } from "@/stores/storeAuth"
+import Navbar from "@/components/UI/Navbar.vue"
+import MySortAndSearch from "@/components/UI/MySortAndSearch.vue"
+
+const storeAuth = useStoreAuth()
+
+onMounted(storeAuth.init)
 </script>
 
 <style>
@@ -25,9 +33,8 @@ body {
 
 .app {
   display: grid;
-  grid-template-columns: 1fr 1050px 1fr;
-  column-gap: 40px;
-  justify-content: start;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 30px;
 }
 
 button {

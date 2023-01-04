@@ -11,7 +11,7 @@
       <h2 class="newsLoadingText" v-else>News loading in progress...</h2>
       <div v-intersection="storeNews.loadMoreNews" class="observer"></div>
     </div>
-    <my-search-menu :options="storeNews.sortOptionsNews" />
+    <!-- <my-search-menu :options="storeNews.sortOptionsNews" /> -->
   </div>
 </template>
 
