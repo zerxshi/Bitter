@@ -18,7 +18,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   const route = useRoute()
   const register = ref<Boolean>(false)
   let validationError = ref<Boolean>(false)
-  let userLogged = ref<Boolean>(false)
 
   const formTitle = computed<String>(() => {
     return register.value ? "Register" : "Login"
@@ -50,10 +49,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         userData.value.email = user.email
         userData.value.login = user.displayName
         userData.value.id = user.uid
-        userLogged.value = true
-        if (route.path === "/auth") {
-          router.push("/")
-        }
+        router.push("/")
         storePosts.init()
       } else {
         userData.value = {}
@@ -141,7 +137,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     credentials,
     validationError,
     userData,
-    userLogged,
     onSubmit,
     init,
     logoutUser,

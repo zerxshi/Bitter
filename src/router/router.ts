@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router"
+import { useStoreAuth } from "@/stores/storeAuth"
 import NewsPage from "@/pages/NewsPage.vue"
 import PostsPageComposition from "@/pages/PostsPage.vue"
 import ProfilePage from "@/pages/ProfilePage.vue"
@@ -26,6 +27,16 @@ const routes: any[] = [
 const router = createRouter({
   routes,
   history: createWebHashHistory(process.env.BASE_URL),
+})
+
+router.beforeEach(async (to, from) => {
+  const storeAuth = useStoreAuth()
+  if (!storeAuth.userData.id && to.path !== "/auth") {
+    return { path: "/auth" }
+  }
+  if (storeAuth.userData.id && to.path === "/auth") {
+    return false
+  }
 })
 
 export default router
