@@ -8,7 +8,6 @@
       </my-dialog>
       <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
     </div>
-    <trends-and-recs />
   </div>
 </template>
 

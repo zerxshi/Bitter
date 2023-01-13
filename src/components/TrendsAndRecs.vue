@@ -1,52 +1,58 @@
 <template>
-  <div class="trendsAndRecs">
-    <div class="trends">
-      <h2>Trends for you</h2>
-      <div class="trend">
-        <h3>Tesla</h3>
-        <small>30.3K posts</small>
-      </div>
-      <div class="trend">
-        <h3>#ComicCon2022</h3>
-        <small>13K posts</small>
-      </div>
-      <div class="trend">
-        <h3>JS courses</h3>
-        <small>3.2K posts</small>
-      </div>
-      <div class="trend">
-        <h3>#HumanArtists</h3>
-        <small>45.2K posts</small>
-      </div>
-    </div>
-    <div class="recommendations">
-      <h2>Who to follow</h2>
-      <div class="profileRec">
-        <div class="user">
-          <h3>Elon Musk</h3>
-          <small>@elonmusk</small>
+  <div v-if="storeProfile.showTrendsAndRecs" class="trendsAndRecs">
+    <div class="trendsContainer">
+      <div class="trends">
+        <h2>Trends for you</h2>
+        <div class="trend">
+          <h3>Tesla</h3>
+          <small>30.3K posts</small>
         </div>
-        <button class="followBtn">Follow</button>
-      </div>
-      <div class="profileRec">
-        <div class="user">
-          <h3>Wes Bos</h3>
-          <small>@wesbos</small>
+        <div class="trend">
+          <h3>#ComicCon2022</h3>
+          <small>13K posts</small>
         </div>
-        <button class="followBtn">Follow</button>
-      </div>
-      <div class="profileRec">
-        <div class="user">
-          <h3>Bob Ros</h3>
-          <small>@bobart</small>
+        <div class="trend">
+          <h3>JS courses</h3>
+          <small>3.2K posts</small>
         </div>
-        <button class="followBtn">Follow</button>
+        <div class="trend">
+          <h3>#HumanArtists</h3>
+          <small>45.2K posts</small>
+        </div>
+      </div>
+      <div class="recommendations">
+        <h2>Who to follow</h2>
+        <div class="profileRec">
+          <div class="user">
+            <h3>Elon Musk</h3>
+            <small>@elonmusk</small>
+          </div>
+          <button class="followBtn">Follow</button>
+        </div>
+        <div class="profileRec">
+          <div class="user">
+            <h3>Wes Bos</h3>
+            <small>@wesbos</small>
+          </div>
+          <button class="followBtn">Follow</button>
+        </div>
+        <div class="profileRec">
+          <div class="user">
+            <h3>Bob Ros</h3>
+            <small>@bobart</small>
+          </div>
+          <button class="followBtn">Follow</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStoreProfile } from "@/stores/storeProfile"
+
+const storeProfile = useStoreProfile()
+</script>
 
 <style>
 .trends,
@@ -54,7 +60,6 @@
   width: 300px;
   padding: 15px;
   border-radius: 10px;
-  margin-left: 15px;
   background-color: #393148;
   color: #fcfdfd;
 }

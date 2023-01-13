@@ -3,6 +3,7 @@
     <navbar></navbar>
     <router-view></router-view>
     <my-sort-and-search />
+    <trends-and-recs />
   </div>
 </template>
 
@@ -11,6 +12,7 @@ import { onMounted } from "@vue/runtime-core"
 import { useStoreAuth } from "@/stores/storeAuth"
 import Navbar from "@/components/Navbar.vue"
 import MySortAndSearch from "@/components/UI/MySortAndSearch.vue"
+import TrendsAndRecs from "@/components/TrendsAndRecs"
 
 const storeAuth = useStoreAuth()
 

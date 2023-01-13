@@ -3,7 +3,6 @@ import { ref, computed } from "vue"
 import { useStorePosts } from "@/stores/storePosts"
 import { useStoreAuth } from "@/stores/storeAuth"
 import { useRoute } from "vue-router"
-import { faL } from "@fortawesome/free-solid-svg-icons"
 
 export const useStoreProfile = defineStore("storeProfile", () => {
   const storePosts = useStorePosts()
@@ -35,10 +34,15 @@ export const useStoreProfile = defineStore("storeProfile", () => {
     }))
   })
 
+  const showTrendsAndRecs = computed<Boolean>(() => {
+    return route.path.includes("profile")
+  })
+
   return {
     exactUserName,
     isMyProfile,
     userPosts,
+    showTrendsAndRecs,
     findExactUserName,
   }
 })
