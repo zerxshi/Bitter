@@ -3,7 +3,7 @@
     v-if="storePosts.posts.length || storePosts.userPosts.length"
     class="postListPage"
   >
-    <transition-group name="postList">
+    <transition-group v-if="isMyProfile" name="postList">
       <post-item
         class="post"
         v-for="userPost in storePosts.filtereduserPosts"
@@ -11,7 +11,17 @@
         :post="userPost"
       />
     </transition-group>
-    <transition-group name="postList" v-if="isHomePage">
+
+    <transition-group v-if="!isMyProfile" name="postList">
+      <post-item
+        class="post"
+        v-for="userPost in storeProfile.userPosts"
+        :key="userPost.id"
+        :post="userPost"
+      />
+    </transition-group>
+
+    <transition-group v-if="isHomePage" name="postList">
       <post-item
         v-for="post in storePosts.filteredPosts"
         :key="post.id"
@@ -30,6 +40,7 @@
 <script setup>
 import { onMounted } from "vue"
 import { useStorePosts } from "@/stores/storePosts"
+import { useStoreProfile } from "@/stores/storeProfile"
 import PostItem from "@/components/PostItem.vue"
 import SpecificPostPage from "@/components/SpecificPostPage.vue"
 
@@ -38,9 +49,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isMyProfile: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const storePosts = useStorePosts()
+const storeProfile = useStoreProfile()
 
 onMounted(storePosts.fetchComments)
 </script>

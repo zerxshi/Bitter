@@ -9,7 +9,7 @@
 <script setup>
 import { onMounted } from "@vue/runtime-core"
 import { useStoreAuth } from "@/stores/storeAuth"
-import Navbar from "@/components/UI/Navbar.vue"
+import Navbar from "@/components/Navbar.vue"
 import MySortAndSearch from "@/components/UI/MySortAndSearch.vue"
 
 const storeAuth = useStoreAuth()

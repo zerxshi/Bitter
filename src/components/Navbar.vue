@@ -7,21 +7,20 @@
       <button @click="$router.push('/news')" class="navbarBtn">
         <font-awesome-icon icon="fa-solid fa-newspaper" class="icon" />News
       </button>
-      <button @click="$router.push('/profile/zerxshi')" class="navbarBtn">
+      <button
+        @click="$router.push(`/profile/${storeAuth.userData.login}`)"
+        class="navbarBtn"
+      >
         <font-awesome-icon icon="fa-solid fa-user" class="icon" />Profile
       </button>
-      <button @click="$router.push('/')" class="navbarBtn">
+      <button @click="$router.push('/settings')" class="navbarBtn">
         <font-awesome-icon icon="fa-solid fa-gear" class="icon" />Settings
       </button>
       <button class="createPostBtn" @click="storePosts.showDialog = true">
         Create post
       </button>
       <div v-if="storeAuth.userData.id" class="userInfo">
-        <img
-          src="https://pbs.twimg.com/media/FiPTOq5VsAYc2-n?format=jpg"
-          alt="userPic"
-          class="userPic"
-        />
+        <img :src="storeAuth.profilePic" alt="userPic" class="userPic" />
         <div class="userTags">
           <p class="userName">{{ storeAuth.userData.email }}</p>
           <p class="userTag">@{{ storeAuth.userData.login }}</p>

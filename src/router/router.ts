@@ -1,8 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 import { useStoreAuth } from "@/stores/storeAuth"
+import { useStoreProfile } from "@/stores/storeProfile"
 import NewsPage from "@/pages/NewsPage.vue"
 import PostsPageComposition from "@/pages/PostsPage.vue"
 import ProfilePage from "@/pages/ProfilePage.vue"
+import SettingsPage from "@/pages/SettingsPage.vue"
 import AuthPage from "@/pages/AuthPage.vue"
 
 const routes: any[] = [
@@ -17,6 +19,10 @@ const routes: any[] = [
   {
     path: "/profile/:user",
     component: ProfilePage,
+  },
+  {
+    path: "/settings",
+    component: SettingsPage,
   },
   {
     path: "/auth",

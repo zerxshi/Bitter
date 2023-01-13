@@ -2,7 +2,7 @@
   <div class="profilePage">
     <div class="profile">
       <profile-info />
-      <post-list />
+      <post-list :isMyProfile="storeProfile.isMyProfile" />
       <my-dialog>
         <post-form />
       </my-dialog>
@@ -19,6 +19,7 @@ import TrendsAndRecs from "@/components/TrendsAndRecs"
 import ProfileInfo from "@/components/ProfileInfo.vue"
 import PostList from "@/components/PostList.vue"
 import PostForm from "@/components/PostForm.vue"
+import { onMounted } from "@vue/runtime-core"
 
 const storeProfile = useStoreProfile()
 const storePosts = useStorePosts()

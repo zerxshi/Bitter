@@ -5,7 +5,7 @@
         <post-form />
       </my-dialog>
       <post-form />
-      <post-list :isHomePage="true" />
+      <post-list :isHomePage="true" :isMyProfile="true" />
       <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
     </div>
   </div>

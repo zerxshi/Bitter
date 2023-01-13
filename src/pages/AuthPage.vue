@@ -49,6 +49,9 @@
         <p v-if="storeAuth.validationError" class="validationError">
           Please enter an email and password!
         </p>
+        <p v-if="storeAuth.emailError" class="validationError">
+          This email already in use
+        </p>
         <button class="submitBtn">{{ storeAuth.formTitle }}</button>
       </form>
     </div>
@@ -130,7 +133,6 @@ label {
 .validationError {
   margin-top: 5px;
   color: #9c5f64;
-  text-align: center;
   font-size: 15px;
   font-weight: bold;
 }

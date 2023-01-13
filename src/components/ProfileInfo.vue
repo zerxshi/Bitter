@@ -1,15 +1,15 @@
 <template>
   <div class="profileInfo">
-    <img
-      src="https://pbs.twimg.com/media/FiPTOq5VsAYc2-n?format=jpg"
-      alt="profilePic"
-      class="profilePic"
-    />
+    <img :src="storeAuth.profilePic" alt="profilePic" class="profilePic" />
     <p class="userName">
-      {{ storeProfile.exactUserName ? storeProfile.exactUserName : "Arsen" }}
+      {{
+        storeProfile.exactUserName
+          ? storeProfile.exactUserName
+          : storeAuth.userData.email
+      }}
     </p>
     <p class="userTag">@{{ $route.params.user }}</p>
-    <p class="description">Learning Vue 3 + Composition API</p>
+    <p class="description">Hardcoded description</p>
     <div class="followersCount">
       <p class="following">135 <small>Following</small></p>
       <p class="following">23 <small>Followers</small></p>
@@ -19,9 +19,11 @@
 
 <script setup>
 import { useStoreProfile } from "@/stores/storeProfile"
-import { onMounted } from "@vue/runtime-core"
+import { useStoreAuth } from "@/stores/storeAuth"
+import { computed, onMounted } from "@vue/runtime-core"
 
 const storeProfile = useStoreProfile()
+const storeAuth = useStoreAuth()
 
 onMounted(storeProfile.findExactUserName)
 </script>

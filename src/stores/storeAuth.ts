@@ -18,9 +18,17 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   const route = useRoute()
   const register = ref<Boolean>(false)
   let validationError = ref<Boolean>(false)
+  let emailError = ref<Boolean>(false)
 
   const formTitle = computed<String>(() => {
     return register.value ? "Register" : "Login"
+  })
+
+  const profilePic = computed(() => {
+    if (userData.value.profilePic) {
+      return userData.value.profilePic
+    }
+    return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
   })
 
   interface credentials {
@@ -38,6 +46,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   interface userData {
     email?: string | null
     login?: string | null
+    profilePic?: string | null
     id?: string
   }
 
@@ -48,6 +57,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
       if (user) {
         userData.value.email = user.email
         userData.value.login = user.displayName
+        userData.value.profilePic = user.photoURL
         userData.value.id = user.uid
         router.push("/")
         storePosts.init()
@@ -65,31 +75,14 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         auth,
         credentials.email,
         credentials.password
-      ).catch((error) => console.log(error))
+      ).catch((error) => (emailError.value = true))
 
       await updateProfile(auth.currentUser!, {
         displayName: credentials.login,
       }).catch((error) => console.log(error))
     } catch (error) {
-      console.log("error: ", error)
+      console.error(error)
     }
-    // createUserWithEmailAndPassword(
-    //   auth,
-    //   credentials.email,
-    //   credentials.password
-    // )
-    //   .then((userCredential) => {
-    //     const user = userCredential.user
-    //     updateProfile(user, {
-    //       displayName: credentials.login,
-    //       photoURL: "https://pbs.twimg.com/media/FiPTOq5VsAYc2-n?format=jpg",
-    //     })
-    //       .then(() => {})
-    //       .catch((error) => {})
-    //   })
-    //   .catch((error) => {
-    //     console.log("error: ", error.message)
-    //   })
     credentials.email = ""
     credentials.login = ""
     credentials.password = ""
@@ -137,6 +130,8 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     credentials,
     validationError,
     userData,
+    profilePic,
+    emailError,
     onSubmit,
     init,
     logoutUser,
