@@ -6,15 +6,14 @@ import router from "@/router/router"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
-  faArrowRightFromBracket,
   faGear,
   faHome,
   faNewspaper,
-  faSignOut,
   faSignOutAlt,
   faUser,
 } from "@fortawesome/free-solid-svg-icons"
 import directives from "@/directives"
+import './assets/tailwind.css'
 
 const app = createApp(App)
 const pinia = createPinia()

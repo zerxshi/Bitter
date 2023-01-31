@@ -24,13 +24,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     return register.value ? "Register" : "Login"
   })
 
-  const profilePic = computed(() => {
-    if (userData.value.profilePic) {
-      return userData.value.profilePic
-    }
-    return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-  })
-
   interface credentials {
     email: string
     login: string
@@ -58,7 +51,10 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         userData.value.email = user.email
         userData.value.login = user.displayName
         userData.value.profilePic = user.photoURL
+          ? user.photoURL
+          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
         userData.value.id = user.uid
+        console.log(user)
         router.push("/")
         storePosts.init()
       } else {
@@ -130,7 +126,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     credentials,
     validationError,
     userData,
-    profilePic,
     emailError,
     onSubmit,
     init,

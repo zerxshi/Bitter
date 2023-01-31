@@ -8,7 +8,7 @@ export const useStoreSettings = defineStore("storeSettings", () => {
   const pictureInput = ref<string>("")
 
   const updateLogin = () => {
-    if (loginInput.value !== "") {
+    if (loginInput.value.trim() !== "") {
       updateProfile(auth.currentUser!, {
         displayName: loginInput.value,
       }).catch((error) => {
@@ -18,7 +18,7 @@ export const useStoreSettings = defineStore("storeSettings", () => {
   }
 
   const updatePicture = () => {
-    if (pictureInput.value !== "") {
+    if (pictureInput.value.trim() !== "") {
       console.log("working")
       updateProfile(auth.currentUser!, {
         photoURL: pictureInput.value,

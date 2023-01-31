@@ -20,7 +20,11 @@
         Create post
       </button>
       <div v-if="storeAuth.userData.id" class="userInfo">
-        <img :src="storeAuth.profilePic" alt="userPic" class="userPic" />
+        <img
+          :src="storeAuth.userData.profilePic"
+          alt="userPic"
+          class="userPic"
+        />
         <div class="userTags">
           <p class="userName">{{ storeAuth.userData.email }}</p>
           <p class="userTag">@{{ storeAuth.userData.login }}</p>

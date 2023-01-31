@@ -101,7 +101,6 @@ export const useStorePosts = defineStore("storePosts", () => {
       (querySnapshot: any) => {
         let firebasePosts = ref<any[]>([])
         querySnapshot.forEach((doc: any) => {
-          // if (route.params.user === doc.data().user || homePage) {
           let post = {
             id: doc.id,
             body: doc.data().body,
@@ -111,7 +110,6 @@ export const useStorePosts = defineStore("storePosts", () => {
             date: doc.data().date,
           }
           firebasePosts.value.unshift(post)
-          // }
         })
         userPosts.value = firebasePosts.value
       }
@@ -122,33 +120,14 @@ export const useStorePosts = defineStore("storePosts", () => {
     userPosts.value = []
     if (getPostsSnapshot) getPostsSnapshot()
   }
+
   //Post Actions
-
   let showDialog = ref<boolean>(false)
-
-  // interface post {
-  //   userName: string
-  //   user: string
-  //   body: string
-  //   myPost: boolean
-  //   id?: number
-  // }
 
   let postBody = ref<string>("")
 
   const createPost = async (): Promise<any> => {
     const date = Date.now().toString()
-    // if (post.value.body !== "") {
-    //   post.value.id = Date.now()
-    //   posts.value.unshift(post.value)
-    //   showDialog.value = false
-    //   post.value = {
-    //     userName: "Arsen",
-    //     user: "zerxshi",
-    //     body: "",
-    //     myPost: true,
-    //   }
-    // }
     if (postBody.value !== "") {
       await addDoc(postsCollectionRef, {
         body: postBody.value,
@@ -162,8 +141,6 @@ export const useStorePosts = defineStore("storePosts", () => {
   }
 
   const deletePost = async (idToDelete: number): Promise<any> => {
-    // posts.value = posts.value.filter((p) => p.id !== idToDelete)
-    // showSpecificPost.value = false
     await deleteDoc(doc(postsCollectionRef, idToDelete.toString()))
     showSpecificPost.value = false
   }
@@ -200,6 +177,7 @@ export const useStorePosts = defineStore("storePosts", () => {
   const filtereduserPosts = computed<any[]>(() => {
     return sortedUserPosts.value.filter(searchFilter)
   })
+
   //Specific post
   const comments = ref<any[]>([])
 

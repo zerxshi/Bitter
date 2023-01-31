@@ -72,6 +72,7 @@ const checkMouseAction = (event: Event): void => {
   font-size: 18px;
   width: max-content;
   display: flex;
+  align-items: center;
 }
 
 .postAuthor:hover {
