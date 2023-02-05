@@ -84,4 +84,10 @@ const storeProfile = useStoreProfile()
   width: 85px;
   height: 30px;
 }
+
+@media (max-width: 1200px) {
+  .trendsAndRecs {
+    display: none;
+  }
+}
 </style>

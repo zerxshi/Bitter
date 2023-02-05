@@ -1,7 +1,11 @@
 <template>
   <div class="post" @click="storePosts.showPost(post.id)">
-    <div class="hoverMenu" v-if="!storePosts.isSpecificPost && post.myPost">
-      <i class="uil uil-ellipsis-h" onClick="showMenu(this)"></i>
+    <div
+      class="hoverMenu"
+      v-if="!storePosts.isSpecificPost && post.myPost"
+      @click.stop
+    >
+      <i class="uil uil-ellipsis-h"></i>
       <ul class="menu">
         <li @click.stop="storePosts.deletePost(post.id)">
           <i class="uil uil-trash"></i>Delete

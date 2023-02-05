@@ -34,6 +34,10 @@ const storeSettings = useStoreSettings()
 </script>
 
 <style scoped>
+.settingsPage {
+  max-width: 750px;
+}
+
 .formCard {
   background-color: #393148;
   padding: 15px;
@@ -69,5 +73,11 @@ const storeSettings = useStoreSettings()
   height: 30px;
   font-size: 16px;
   font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+  .settingsPage {
+    min-width: 362px;
+  }
 }
 </style>

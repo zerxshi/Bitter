@@ -1,13 +1,11 @@
 <template>
   <div class="profilePage">
-    <div class="profile">
-      <profile-info />
-      <post-list :isMyProfile="storeProfile.isMyProfile" />
-      <my-dialog>
-        <post-form />
-      </my-dialog>
-      <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
-    </div>
+    <profile-info />
+    <post-list :isMyProfile="storeProfile.isMyProfile" />
+    <my-dialog>
+      <post-form />
+    </my-dialog>
+    <div v-intersection="storePosts.loadMorePosts" class="observer"></div>
   </div>
 </template>
 
@@ -27,9 +25,13 @@ const storePosts = useStorePosts()
 <style>
 .profilePage {
   display: flex;
+  flex-direction: column;
+  max-width: 750px;
 }
 
-.profile {
-  width: 750px;
+@media (max-width: 1200px) {
+  .profilePage {
+    min-width: 362px;
+  }
 }
 </style>

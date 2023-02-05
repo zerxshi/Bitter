@@ -81,4 +81,10 @@ const options = computed<any[]>(() => {
 option {
   color: #393148;
 }
+
+@media (max-width: 1200px) {
+  .sortAndSearchMenu {
+    display: none;
+  }
+}
 </style>

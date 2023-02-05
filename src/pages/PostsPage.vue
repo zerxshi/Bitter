@@ -25,10 +25,7 @@ onMounted(storePosts.fetchPosts)
 <style>
 .postsPage {
   display: flex;
-}
-
-.postsList {
-  width: 750px;
+  max-width: 750px;
 }
 
 .appBtns {

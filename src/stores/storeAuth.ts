@@ -54,7 +54,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
           ? user.photoURL
           : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
         userData.value.id = user.uid
-        console.log(user)
         router.push("/")
         storePosts.init()
       } else {

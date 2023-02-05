@@ -2,22 +2,27 @@
   <nav class="navbar">
     <div class="navbarBtns">
       <button @click="$router.push('/')" class="navbarBtn">
-        <font-awesome-icon icon="fas fa-home" class="icon" />Home
+        <font-awesome-icon icon="fas fa-home" class="icon" />
+        <p class="navBtnText">Home</p>
       </button>
       <button @click="$router.push('/news')" class="navbarBtn">
-        <font-awesome-icon icon="fa-solid fa-newspaper" class="icon" />News
+        <font-awesome-icon icon="fa-solid fa-newspaper" class="icon" />
+        <p class="navBtnText">News</p>
       </button>
       <button
         @click="$router.push(`/profile/${storeAuth.userData.login}`)"
         class="navbarBtn"
       >
-        <font-awesome-icon icon="fa-solid fa-user" class="icon" />Profile
+        <font-awesome-icon icon="fa-solid fa-user" class="icon" />
+        <p class="navBtnText">Profile</p>
       </button>
       <button @click="$router.push('/settings')" class="navbarBtn">
-        <font-awesome-icon icon="fa-solid fa-gear" class="icon" />Settings
+        <font-awesome-icon icon="fa-solid fa-gear" class="icon" />
+        <p class="navBtnText">Settings</p>
       </button>
       <button class="createPostBtn" @click="storePosts.showDialog = true">
-        Create post
+        <font-awesome-icon icon="fa-solid fa-pen" class="icon" />
+        <p class="navBtnText">Create post</p>
       </button>
       <div v-if="storeAuth.userData.id" class="userInfo">
         <img
@@ -84,12 +89,15 @@ const storeAuth = useStoreAuth()
 }
 
 .createPostBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 15px;
   border: none;
   border-radius: 50px;
   background-color: #fcfdfd;
   color: #393148;
-  font-size: 22px;
+  font-size: 23px;
   font-weight: bold;
   width: 200px;
   height: 40px;
@@ -129,5 +137,38 @@ const storeAuth = useStoreAuth()
 
 .signOutIcon:active {
   transform: scale(0.96);
+}
+
+@media (max-width: 1300px) {
+  .navbarBtn {
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
+  }
+  .createPostBtn {
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
+  }
+  .navBtnText {
+    display: none;
+  }
+  .userInfo {
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
+  }
+  .userTags {
+    display: none;
+  }
+  .userPic {
+    display: none;
+  }
+  .signOutIcon {
+    margin-left: 12px;
+  }
+  .icon {
+    margin-right: 0;
+  }
 }
 </style>

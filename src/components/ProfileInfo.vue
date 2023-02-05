@@ -1,6 +1,10 @@
 <template>
   <div class="profileInfo">
-    <img :src="storeAuth.profilePic" alt="profilePic" class="profilePic" />
+    <img
+      :src="storeAuth.userData.profilePic"
+      alt="profilePic"
+      class="profilePic"
+    />
     <p class="userName">
       {{
         storeProfile.exactUserName

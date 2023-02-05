@@ -30,10 +30,7 @@ onMounted(storeNews.fetchNews)
 <style scoped>
 .newsPage {
   display: flex;
-}
-
-.newsList {
-  width: 750px;
+  max-width: 750px;
 }
 
 .newsLoadingText {
@@ -43,5 +40,11 @@ onMounted(storeNews.fetchNews)
 
 .observer {
   height: 10px;
+}
+
+@media (max-width: 1200px) {
+  .newsPage {
+    min-width: 362px;
+  }
 }
 </style>

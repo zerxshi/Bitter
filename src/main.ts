@@ -9,15 +9,16 @@ import {
   faGear,
   faHome,
   faNewspaper,
+  faPen,
   faSignOutAlt,
   faUser,
 } from "@fortawesome/free-solid-svg-icons"
 import directives from "@/directives"
-import './assets/tailwind.css'
+import "./assets/tailwind.css"
 
 const app = createApp(App)
 const pinia = createPinia()
-library.add(faHome, faSignOutAlt, faNewspaper, faUser, faGear)
+library.add(faHome, faSignOutAlt, faNewspaper, faUser, faGear, faPen)
 
 components.forEach((component) => {
   app.component(component.name, component)
